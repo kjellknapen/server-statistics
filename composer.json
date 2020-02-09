@@ -1,0 +1,34 @@
+{
+    "name": "kjellknapen/server-statistics",
+    "description": "A demo package",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kjell",
+            "email": "hello@knapen.dev"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "KjellKnapen\\ServerStatistics\\": "src"
+      }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KjellKnapen\\ServerStatistics\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "KjellKnapen\\ServerStatistics\\ServerStatisticsServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "orchestra/testbench": "^4.0"
+    }
+}
