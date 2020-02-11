@@ -14,6 +14,8 @@ class ServerStatisticsServiceProvider extends ServiceProvider
 
   public function boot()
   {
+    $this->loadMigrationsFrom(__DIR__.'/Storage/migrations');
+
     if ($this->app->runningInConsole()) {
       // publish config file
 

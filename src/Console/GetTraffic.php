@@ -4,6 +4,8 @@ namespace KjellKnapen\ServerStatistics\Console;
 
 use Illuminate\Console\Command;
 
+use KjellKnapen\ServerStatistics\Models\Statistics;
+
 class GetTraffic extends Command
 {
     /**
@@ -42,10 +44,31 @@ class GetTraffic extends Command
         $output = "";
 
         exec("lsof  -i  tcp:443,80 | egrep 'PID|->'", $output);
+        $statistic = [];
 
         if (!empty($output) && strpos($output[0], 'PID')) {
             unset($output[0]);
             $this->info(count($output));
+
+            $statistic = [
+              'type' => 'traffic',
+              'status' => 'success',
+              'value' => count($output),
+              'message' => 'Traffic check successful',
+              'output' => json_encode($output),
+            ];
+
+
+        } else {
+            $statistic = [
+              'type' => 'traffic',
+              'status' => 'error',
+              'value' => null,
+              'message' => 'Traffic command failed to execute',
+              'output' => json_encode($output),
+            ];
         }
+
+        $statistic = Statistics::create($statistic);
     }
 }
