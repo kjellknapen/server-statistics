@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use KjellKnapen\ServerStatistics\Tests\TestCase;
 
-class GetTrafficTest extends TestCase
+class MemoryUsageTest extends TestCase
 {
     /** @test */
-    function the_get_traffic_command_shows_current_traffic()
+    function the_memory_usage_command_shows_memory_being_used()
     {
-        $data = Artisan::call('server-statistics:get-traffic');
+        $data = Artisan::call('server-statistics:memory-usage');
 
         $this->assertTrue(gettype($data) == 'integer');
     }

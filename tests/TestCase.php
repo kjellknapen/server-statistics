@@ -3,12 +3,15 @@
 namespace KjellKnapen\ServerStatistics\Tests;
 
 use KjellKnapen\ServerStatistics\ServerStatisticsServiceProvider;
+use Illuminate\Support\Facades\Artisan;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
   public function setUp(): void
   {
     parent::setUp();
+
+    $this->artisan('migrate', ['--database' => 'testing']);
     // additional setup
   }
 

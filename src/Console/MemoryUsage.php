@@ -6,21 +6,21 @@ use Illuminate\Console\Command;
 
 use KjellKnapen\ServerStatistics\Models\Statistics;
 
-class GetTraffic extends Command
+class MemoryUsage extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'server-statistics:get-traffic';
+    protected $signature = 'server-statistics:memory-usage';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Display and save memory being used on the server';
 
     /**
      * Create a new command instance.
@@ -43,28 +43,35 @@ class GetTraffic extends Command
 
         $output = "";
 
-        exec("lsof  -i  tcp:443,80 | egrep 'PID|->'", $output);
+        exec("free -h | grep Mem", $output);
         $statistic = [];
 
-        if (!empty($output) && strpos($output[0], 'PID')) {
-            unset($output[0]);
-            $this->info(count($output));
+        if (!empty($output) && strpos($output[0], 'Mem') !== -1) {
+            $splitArray = explode('G', str_replace('Mem:', '', preg_replace('/\s+/', '', $output[0])));
+            $mem = $splitArray[0];
+            $used = $splitArray[1];
+            $percent = round((100 * $used )/ $mem, 2);
+            $this->info($percent . '% of Memory is being used');
 
             $statistic = [
-              'type' => 'traffic',
+              'type' => 'memory',
               'status' => 'success',
-              'value' => count($output),
-              'message' => 'Traffic check successful',
-              'output' => json_encode($output),
+              'value' => $percent,
+              'message' => $percent . '% of Memory is being used',
+              'output' => json_encode([
+                'Total' => $mem,
+                'Used' => $used,
+                'Percent' => $percent
+              ]),
             ];
 
 
         } else {
             $statistic = [
-              'type' => 'traffic',
+              'type' => 'memory',
               'status' => 'error',
               'value' => null,
-              'message' => 'Traffic command failed to execute',
+              'message' => 'Memory command failed to execute',
               'output' => json_encode($output),
             ];
         }
