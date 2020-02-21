@@ -41,32 +41,36 @@ class DiskUsage extends Command
     {
         $output = "";
 
-        exec("du -sh / 2>/dev/null | grep -P '^[0-9\.]+G'", $output);
+        exec("df -h --total | grep total", $output);
         $statistic = [];
 
         if (!empty($output)) {
-            $usage = preg_replace('/[^0-9.]/', '', $output[0]);
+            $usage = trim(substr($output[0], strpos($output[0], '%') - 3, 3));
             $this->info($usage);
 
-            /*$statistic = [
-              'type' => 'cpu',
+            $statistic = [
+              'type' => 'disk',
               'status' => 'success',
-              'value' => $output[0],
-              'message' => $output[0] . '% of Memory is being used',
+              'value' => $usage,
+              'message' => $usage . '% of Disk space is being used',
               'output' => $output,
-            ];*/
+            ];
 
 
         } else {
-            /*$statistic = [
+            $statistic = [
               'type' => 'cpu',
               'status' => 'error',
               'value' => null,
               'message' => 'Cpu command failed to execute',
               'output' => json_encode($output),
-            ];*/
+            ];
         }
 
-        //$statistic = Statistics::create($statistic);
+        if (!empty($statistic)) {
+          $statistic = Statistics::create($statistic);
+        } else {
+          $this->error('Command failed to execute');
+        }
     }
 }

@@ -7,6 +7,7 @@ use KjellKnapen\ServerStatistics\Console\MemoryUsage;
 use KjellKnapen\ServerStatistics\Console\CpuUsage;
 use KjellKnapen\ServerStatistics\Console\DiskUsage;
 use KjellKnapen\ServerStatistics\Console\CurrentTraffic;
+use KjellKnapen\ServerStatistics\Console\LoadAvg;
 
 class ServerStatisticsServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ class ServerStatisticsServiceProvider extends ServiceProvider
           MemoryUsage::class,
           CpuUsage::class,
           DiskUsage::class,
+          LoadAvg::class,
       ]);
     }
   }
