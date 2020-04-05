@@ -1,4 +1,4 @@
-# Control your server statistics from one single point.
+# Control your server statistics from one single point. [WIP Don't use yet]
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/kjellknapen/server-statistics.svg?style=flat-square)](https://packagist.org/packages/kjellknapen/server-statistics)
 [![Code coverage](https://scrutinizer-ci.com/g/kjellknapen/server-statistics/badges/coverage.png)](https://scrutinizer-ci.com/g/kjellknapen/server-statistics)
@@ -24,6 +24,14 @@ You can run the following command to publish the config file into your `config` 
 php artisan vendor:publish --provider="KjellKnapen\ServerStatistics\ServerStatisticsServiceProvider"
 ```
 
+## Server requirements
+Your server needs to run on a UNIX os and has to be able to run the following commands:
+- top
+- egrep
+- free
+- df
+- lsof
+
 ## Available statistics
 
 - [`Cpu Usage`](#cpuusage)
@@ -34,44 +42,33 @@ php artisan vendor:publish --provider="KjellKnapen\ServerStatistics\ServerStatis
 
 ### `Cpu Usage`
 
-Determine if the user is authorized to perform an ability on an instance of the given model. The id of the model is the field under validation
-
-Consider the following policy:
+Cpu usage explained
 
 ```php
 
 ```
 
 
-### `CountryCode`
+### `Current Traffic`
 
-Determine if the field under validation is a valid ISO3166 country code.
-
-```php
-
-```
-
-If you want to validate a nullable country code field, you can call the `nullable()` method on the `CountryCode` rule. This way `null` and `0` are also passing values:
+Current traffic explained
 
 ```php
 
 ```
 
-### `Enum`
 
-This rule will validate if the value under validation is part of the given enum class. We assume that the enum class has a static `toArray` method that returns all valid values. If you're looking for a good enum class, take a look at [spatie/enum](https://github.com/spatie/enum) or [myclabs/php-enum](https://github.com/myclabs/php-enum).
+### `Disk Usage`
 
-Consider the following enum class:
+Disk usage explained
 
 ```php
 
 ```
 
-### `ModelsExist`
+### `Load Average`
 
-Determine if all of the values in the input array exist as attributes for the given model class.
-
-By default the rule assumes that you want to validate using `id` attribute. In the example below the validation will pass if all `model_ids` exist for the `Model`.
+Load average explained
 
 
 ```php
@@ -79,11 +76,9 @@ By default the rule assumes that you want to validate using `id` attribute. In t
 ```
 
 
-### `Delimited`
+### `Memory Usage`
 
-This rule can validate a string containing delimited values. The constructor accepts a rule that is used to validate all separate values.
-
-Here's an example where we are going to validate a string containing comma separated email addresses.
+Memory usage explained
 
 ```php
 
