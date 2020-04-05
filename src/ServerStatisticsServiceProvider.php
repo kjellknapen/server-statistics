@@ -8,6 +8,7 @@ use KjellKnapen\ServerStatistics\Console\CpuUsage;
 use KjellKnapen\ServerStatistics\Console\DiskUsage;
 use KjellKnapen\ServerStatistics\Console\CurrentTraffic;
 use KjellKnapen\ServerStatistics\Console\LoadAvg;
+use KjellKnapen\ServerStatistics\Console\SshKeygen;
 
 class ServerStatisticsServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class ServerStatisticsServiceProvider extends ServiceProvider
           CpuUsage::class,
           DiskUsage::class,
           LoadAvg::class,
+          SshKeygen::class,
       ]);
     }
   }

@@ -71,7 +71,7 @@ class LoadAvg extends Command
                     Statistics::create($statistic);
                 }
 
-                $this->info('Load Average has been saved to the database.')
+                $this->info('Load Average has been saved to the database.');
 
             } else {
                 $statistic = [
